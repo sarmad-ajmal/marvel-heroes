@@ -1,9 +1,29 @@
-import React from 'react';
+import { lazy } from 'react';
+import {
+  Routes, Route, BrowserRouter as Router,
+} from 'react-router-dom'
+
+const HeroesGrid = lazy(() => import('./components/heroes').then(module => ({ default: module.HeroGrid })))
+const HeroesDetail = lazy(() => import('./components/heroes').then(module => ({ default: module.HeroDetail })))
+
 
 function App() {
   return (
     <div className="App">
-      Hello world
+      <Router>
+        <Routes>
+          <Route
+            path=':id'
+            element={<HeroesDetail />
+            }
+          />
+          <Route
+          path='*'
+            element={<HeroesGrid />
+            }
+          />
+        </Routes>
+      </Router>
     </div>
   );
 }
