@@ -2,7 +2,7 @@ import { lazy } from 'react';
 import {
   Routes, Route, BrowserRouter as Router,
 } from 'react-router-dom'
-
+import './reset.css'
 const HeroesGrid = lazy(() => import('./components/heroes').then(module => ({ default: module.HeroGrid })))
 const HeroesDetail = lazy(() => import('./components/heroes').then(module => ({ default: module.HeroDetail })))
 
