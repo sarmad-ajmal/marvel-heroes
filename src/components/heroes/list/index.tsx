@@ -1,6 +1,8 @@
+import React from 'react';
 import { IHero } from "../interface"
 import useHeroesGrid from "./index.hook"
 import '../index.scss'
+import { Link } from "react-router-dom"
 const HeroesGrid = () => {
   const { heroes = [] } = useHeroesGrid()
 
@@ -11,13 +13,16 @@ export default HeroesGrid
 
 const HeroCard = ({ hero }: { hero: IHero }) => {
   const { id, name, thumbnail } = hero
-  const { path,extension } = thumbnail
-  const thumbnailUrl=`${path}.${extension}`
+  const { path, extension } = thumbnail
+  const thumbnailUrl = `${path}.${extension}`
+  const detailUrl=`/${id}`
   return (
-    <div className="card">
-      <div className="title">{name}</div>
-      <img src={thumbnailUrl} alt={name} title={name}/>
-    </div>
+    <Link to={detailUrl}>
+      <div className="card">
+        <div className="title">{name}</div>
+        <img src={thumbnailUrl} alt={name} title={name} />
+      </div>
+    </Link>
   )
 
 }

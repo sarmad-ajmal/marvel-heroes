@@ -20,11 +20,11 @@ interface Url {
 interface Stories {
   available: number;
   collectionURI: string;
-  items: Item2[];
+  items: IStoriesItems[];
   returned: number;
 }
 
-interface Item2 {
+interface IStoriesItems {
   resourceURI: string;
   name: string;
   type: string;
@@ -33,11 +33,11 @@ interface Item2 {
 interface Comics {
   available: number;
   collectionURI: string;
-  items: Item[];
+  items: IComicsItems[];
   returned: number;
 }
 
-interface Item {
+interface IComicsItems {
   resourceURI: string;
   name: string;
 }

@@ -36,6 +36,47 @@
     }
   }
 }
+
+.hero-detail {
+  width: 100%;
+  .character-container {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    img {
+      width: 750px;
+      height: auto;
+      display: inline-block;
+      object-fit: contain;
+      border-radius: 5px;
+    }
+
+    .title {
+      margin-top: 0.5em;
+      font-size: 1.5em;
+      color: hsl(210, 8%, 25%);
+      font-weight: 500;
+    }
+  }
+  .info-panel {
+    width: 100%;
+    margin: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    section {
+      margin-bottom: 1em;
+      min-width: calc(50vw - 25px);
+    }
+    .info {
+      h3 {
+        font-size: 2em;
+        color: hsl(210, 8%, 25%);
+        font-weight: 500;
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 600px) {
   .heroes-list {
     flex-direction: column;
@@ -58,5 +99,21 @@
         object-fit: contain;
       }
     }
+  }
+}
+@media only screen and (max-width: 600px) {
+  .hero-detail {
+    .character-container {
+      flex-direction: column;
+      img {
+        width: 100%;
+        height: auto;
+        display: inline-block;
+        object-fit: contain;
+      }
+    }
+  .info-panel {
+    flex-direction: column;
+  }
   }
 }

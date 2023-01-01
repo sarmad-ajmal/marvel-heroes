@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 import {
   Routes, Route, BrowserRouter as Router,
 } from 'react-router-dom'
@@ -7,22 +7,26 @@ const HeroesGrid = lazy(() => import('./components/heroes').then(module => ({ de
 const HeroesDetail = lazy(() => import('./components/heroes').then(module => ({ default: module.HeroDetail })))
 
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <Router>
-        <Routes>
-          <Route
-            path=':id'
-            element={<HeroesDetail />
-            }
-          />
-          <Route
-          path='*'
-            element={<HeroesGrid />
-            }
-          />
-        </Routes>
+        <Suspense fallback={() => (<div></div>)}>
+
+          <Routes>
+            <Route
+              path=':id'
+              element={<HeroesDetail />
+              }
+            />
+            <Route
+              path='*'
+              element={<HeroesGrid />
+              }
+            />
+          </Routes>
+        </Suspense>
+
       </Router>
     </div>
   );
