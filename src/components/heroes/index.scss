@@ -39,6 +39,9 @@
 
 .hero-detail {
   width: 100%;
+  .mobile-back{
+    display: none;
+  }
   .character-container {
     margin: 20px;
     display: flex;
@@ -102,6 +105,7 @@
   }
 }
 @media only screen and (max-width: 600px) {
+  
   .hero-detail {
     .character-container {
       flex-direction: column;

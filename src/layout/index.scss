@@ -1,0 +1,23 @@
+.nav {
+  min-height: 50px;
+  width: 100vw;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  box-shadow: 0 -4px 8px 0 rgba(0, 0, 0, 0.2), 0 -6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 1px;
+  background-color: #202020;
+  display: flex;
+  img {
+    margin-inline: auto;
+  }
+  .mobile-back {
+    position: absolute;
+    height: 100%;
+    display: flex;
+    margin-left: 5px;
+    align-items: center;
+  }
+}

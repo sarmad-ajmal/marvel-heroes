@@ -1,9 +1,12 @@
 import React from 'react';
-import { IHero } from '../interface';
+import ReactDOM from 'react-dom'
+
 import useHeroDetail from './index.hook';
 
+import { IHero } from '../interface';
+
 const HeroDetail = () => {
-  const { characterId, hero } = useHeroDetail()
+  const { hero, goBack } = useHeroDetail()
   const { name, description, thumbnail, comics, events, series, stories } = hero || {}
   const { path, extension } = thumbnail || {}
   const thumbnailUrl = `${path}.${extension}`
@@ -12,6 +15,7 @@ const HeroDetail = () => {
     return <div>nothing found</div>
   }
   return <div className='hero-detail'>
+    <BackButton goBack={goBack} />
     <div className="character-container">
 
       <img src={thumbnailUrl} alt={name} title={name} />
@@ -79,4 +83,13 @@ const Series = ({ series }: { series: IHero['series'] }) => {
       {items.map(cItem => (<li key={cItem.name}>{cItem.name}</li>))}
     </ul>
   </section>
+}
+
+const BackButton = ({ goBack }: { goBack: any }) => {
+  const nav = document.getElementById('nav')
+  if (nav == null) {
+    return null
+  }
+  return ReactDOM.createPortal(<span className='mobile-back' onClick={goBack}>
+    &#8592;  </span>, nav)
 }
