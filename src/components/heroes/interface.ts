@@ -46,3 +46,9 @@ interface Thumbnail {
   path: string;
   extension: string;
 }
+export interface IMeta {
+  perPage: number
+  totalPages: number
+  totalResults: number
+  curPage: number
+ }
