@@ -10,9 +10,15 @@ import { IHero } from "../interface"
 import '../index.scss'
 import './rc-pagination.scss'
 import SearchInput from '../../../common/components/search_input';
+import InlineSpinner from '../../../common/components/inline_spinner';
 const HeroesGrid = () => {
-  const { heroes = [], meta, onChange, onChangeQuery, onClearSearch } = useHeroesGrid()
+  const { heroes = [], meta, loading, initialLoading, onChange, onChangeQuery, onClearSearch } = useHeroesGrid()
 
+  if (initialLoading && loading) {
+    return <div className="page-center">
+      <InlineSpinner />
+    </div>
+  }
 
   return <>
     <div className="filters">
@@ -32,10 +38,15 @@ const HeroesGrid = () => {
           locale={PaginationLocale}
         />
       </div>
-      <SearchInput onClearSearch={onClearSearch} onSearch={onChangeQuery} placeholder={'Search characters by name'} />
+      <SearchInput onClearSearch={onClearSearch} onSearch={onChangeQuery} placeholder={'Search characters by name'} disabled={loading} />
     </div>
-
-    <div className="heroes-list">
+    <div className={!loading ? 'is-hidden' : `page-center`}>
+      <InlineSpinner />
+    </div>
+    <div className={!loading && !heroes.length ? `page-center` : 'is-hidden'}>
+      <span>Nothing found</span>
+    </div>
+    <div className={loading ? 'is-hidden' : "heroes-list"}>
 
       {heroes.map((cHero) => (<HeroCard hero={cHero} key={cHero.id} />))}</div>
   </>

@@ -5,11 +5,13 @@ import { IHero, IMeta } from "../interface";
 
 const CryptoJS = require("crypto-js");
 
-const PUBLIC_KEY = "0d975c6cd4257bd07429a92e23f7f3da";
-const PRIV_KEY = "45dccfa1929b3037b493e77ec1ceb925ca6eaa00";
+const PUBLIC_KEY = process.env.REACT_APP_PUBLIC_KEY || "";
+const PRIV_KEY = process.env.REACT_APP_PRIVATE_KEY || "";
+
 const useHeroesGrid = () => {
   const [heroes, setHeroes] = useState<IHero[]>([]);
-  // const [query, setQuery] = useState<string>("");
+  const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
   const query = useRef("");
   const meta = useRef<IMeta>({
     curPage: 1,
@@ -39,7 +41,7 @@ const useHeroesGrid = () => {
     if (!value) {
       resetFilters();
     }
-    fetchHeores()
+    fetchHeores();
   };
   const resetFilters = () => {
     meta.current = { ...meta.current, curPage: 1 };
@@ -48,38 +50,59 @@ const useHeroesGrid = () => {
     onChangeQuery("");
   };
   const fetchHeores = async () => {
-    const ts = new Date().getTime();
-    const hash = CryptoJS.MD5(ts + PRIV_KEY + PUBLIC_KEY).toString();
-    const hexString = hash.toString("hex");
-    let payload = {
-      apikey: PUBLIC_KEY,
-      ts,
-      hash: hexString,
-      limit: meta.current.perPage,
-      offset:
-        meta.current.curPage * meta.current.perPage - meta.current.perPage,
-    };
-    if (!!query.current) {
-      Object.assign(payload, { name: query.current });
-    }
-    const params = queryString.stringify(payload);
-    const url = `https://gateway.marvel.com:443/v1/public/characters?${params}`;
-    const response = await fetch(url);
-    const json = await response.json();
-    const { data } = json || {};
-    const { results = [], total: totalResults = 0 } = data || {};
-    meta.current = {
-      ...meta.current,
-      totalResults,
-      totalPages: totalResults / meta.current.perPage!,
-    };
+    try {
+      setLoading(true);
+      const ts = new Date().getTime();
+      const hash = CryptoJS.MD5(ts + PRIV_KEY + PUBLIC_KEY).toString();
+      const hexString = hash.toString("hex");
+      let payload = {
+        apikey: PUBLIC_KEY,
+        ts,
+        hash: hexString,
+        limit: meta.current.perPage,
+        offset:
+          meta.current.curPage * meta.current.perPage - meta.current.perPage,
+      };
+      if (!!query.current) {
+        Object.assign(payload, { name: query.current });
+      }
+      const params = queryString.stringify(payload);
+      const url = `https://gateway.marvel.com:443/v1/public/characters?${params}`;
+      const response = await fetch(url);
+      const json = await response.json();
+      const { data } = json || {};
+      const { results = [], total: totalResults = 0 } = data || {};
+      meta.current = {
+        ...meta.current,
+        totalResults,
+        totalPages: totalResults / meta.current.perPage!,
+      };
 
-    setHeroes(results);
+      setHeroes(results);
+
+      setLoading(false);
+      if (initialLoading) {
+        setInitialLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      if (initialLoading) {
+        setInitialLoading(false);
+      }
+    }
   };
   useEffect(() => {
-    fetchHeores().catch(console.error);
+    fetchHeores();
   }, []);
-  return { heroes, meta, onChange, onChangeQuery, onClearSearch };
+  return {
+    heroes,
+    meta,
+    loading,
+    initialLoading,
+    onChange,
+    onChangeQuery,
+    onClearSearch,
+  };
 };
 
 export default useHeroesGrid;

@@ -2,17 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom'
 
 import useHeroDetail from './index.hook';
+import InlineSpinner from '../../../common/components/inline_spinner';
 
 import { IHero } from '../interface';
+const FeatherIcon = require("feather-icons-react").default;
 
 const HeroDetail = () => {
-  const { hero, goBack } = useHeroDetail()
+  const { hero, loading, goBack } = useHeroDetail()
   const { name, description, thumbnail, comics, events, series, stories } = hero || {}
   const { path, extension } = thumbnail || {}
   const thumbnailUrl = `${path}.${extension}`
+  if (loading) {
+    return <div className="page-center">
 
+      <InlineSpinner />
+    </div>
+  }
   if (hero == null) {
-    return <div>nothing found</div>
+    return <div className='page-center'>Nothing found</div>
   }
   return <div className='hero-detail'>
     <BackButton goBack={goBack} />
@@ -90,6 +97,6 @@ const BackButton = ({ goBack }: { goBack: any }) => {
   if (nav == null) {
     return null
   }
-  return ReactDOM.createPortal(<span className='mobile-back' onClick={goBack}>
-    &#8592;  </span>, nav)
+  return ReactDOM.createPortal(<span className='mobile-back' onClick={goBack} style={{cursor:'pointer'}}>
+    <FeatherIcon icon='chevron-left' color={'white'}/>  </span>, nav)
 }

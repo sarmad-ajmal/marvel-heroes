@@ -1,36 +1,58 @@
 import { useEffect, useState } from "react";
+import queryString from "query-string";
 import { useNavigate, useParams } from "react-router-dom";
+
 import { IHero } from "../interface";
 const CryptoJS = require("crypto-js");
-const PUBLIC_KEY = "0d975c6cd4257bd07429a92e23f7f3da";
-const PRIV_KEY = "45dccfa1929b3037b493e77ec1ceb925ca6eaa00";
+
+const PUBLIC_KEY = process.env.REACT_APP_PUBLIC_KEY || "";
+const PRIV_KEY = process.env.REACT_APP_PRIVATE_KEY || "";
+
 const useHeroDetail = () => {
   const { id: characterId = "" } = useParams();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [hero, setHero] = useState<IHero>();
+
   const goBack = () => {
     navigate(-1);
   };
   useEffect(() => {
     const fetchHeores = async () => {
+      setLoading(true);
       const ts = new Date().getTime();
       const hash = CryptoJS.MD5(ts + PRIV_KEY + PUBLIC_KEY).toString();
       const hexString = hash.toString("hex");
-      const url = `https://gateway.marvel.com:443/v1/public/characters/${characterId}?apikey=${PUBLIC_KEY}&ts=${ts}&hash=${hexString}`;
+      const payload = {
+        ts,
+        hash: hexString,
+        apikey: PUBLIC_KEY,
+      };
+      const params = queryString.stringify(payload);
+
+      const url = `https://gateway.marvel.com:443/v1/public/characters/${characterId}?${params}`;
       const response = await fetch(url);
       const json = await response.json();
-      const { data } = json || {};
+      const { data, code } = json || {};
       const { results = [] } = data || {};
       if (results.length) {
         setHero(results[0]);
+        setLoading(false);
+      }
+      if (!results.length || code !== 200) {
+        setLoading(false);
       }
     };
-    fetchHeores().catch(console.error);
+    fetchHeores().catch((error) => {
+      setLoading(false);
+    });
   }, [characterId]);
 
   return {
     hero,
-    goBack
+    loading,
+
+    goBack,
   };
 };
 

@@ -64,27 +64,36 @@
       font-size: 1.5em;
       color: hsl(210, 8%, 25%);
       font-weight: 500;
+      margin-bottom: 0.1em;
+
     }
   }
   .info-panel {
-    width: 100%;
     margin: 25px;
     display: flex;
     flex-wrap: wrap;
+    flex: 1;
     section {
       margin-bottom: 1em;
-      min-width: calc(50vw - 25px);
+      min-width: calc(50vw - 50px);
     }
     .info {
       h3 {
         font-size: 2em;
         color: hsl(210, 8%, 25%);
         font-weight: 500;
+        margin-bottom: 0.1em;
       }
     }
   }
 }
-
+.page-center{
+  display: flex;
+  height: calc(100vh - 50px );
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
 @media only screen and (max-width: 600px) {
   .heroes-list {
     flex-direction: column;

@@ -1,6 +1,6 @@
 .nav {
   min-height: 50px;
-  width: 100vw;
+  width: 100%;
   position: sticky;
   top: 0;
   left: 0;
@@ -10,7 +10,7 @@
   margin-bottom: 1px;
   background-color: #202020;
   display: flex;
-  img {
+  img,a {
     margin-inline: auto;
   }
   .mobile-back {

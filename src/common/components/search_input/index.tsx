@@ -3,10 +3,11 @@ import React from 'react'
 import { ISearchInputProps } from './interface'
 import useSearchInput from './index.hook'
 import './index.scss'
+import { noop } from '../../utils'
 const FeatherIcon = require('feather-icons-react').default
 
 const SearchInput: React.FC<ISearchInputProps> = props => {
-  const { placeholder = '', size = 24 } = props
+  const { placeholder = '', size = 24, disabled = false } = props
   const {
     showSearch,
     query,
@@ -28,6 +29,7 @@ const SearchInput: React.FC<ISearchInputProps> = props => {
             placeholder={placeholder}
             onChange={onSearchChange}
             value={query}
+            disabled={false}
           />
         </div>
       </div>
@@ -40,7 +42,7 @@ const SearchInput: React.FC<ISearchInputProps> = props => {
       </span>
       <span className={`nav-item is-icon ${showSearch ? 'is-hidden' : ''}`}>
         <FeatherIcon
-          onClick={onCloseClickHandler}
+          onClick={disabled ? noop : onCloseClickHandler}
           icon='x'
           height={size}
           width={size}
