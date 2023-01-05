@@ -9,27 +9,32 @@ import { PaginationLocale } from './en_us'
 import { IHero } from "../interface"
 import '../index.scss'
 import './rc-pagination.scss'
+import SearchInput from '../../../common/components/search_input';
 const HeroesGrid = () => {
-  const { heroes = [], meta, onChange } = useHeroesGrid()
+  const { heroes = [], meta, onChange, onChangeQuery, onClearSearch } = useHeroesGrid()
 
 
   return <>
-    <div className={'pagination-container'}>
-      <Pagination
-        selectComponentClass={Select}
-        current={meta.current.curPage}
-        pageSize={meta.current.perPage}
-        showQuickJumper
-        pageSizeOptions={['30', '50', '100']}
-        className='rc-pagination'
-        hideOnSinglePage={false}
-        showSizeChanger
-        onShowSizeChange={onChange}
-        onChange={onChange}
-        total={meta.current.totalResults}
-        locale={PaginationLocale}
-      />
+    <div className="filters">
+      <div className={'pagination-container'}>
+        <Pagination
+          selectComponentClass={Select}
+          current={meta.current.curPage}
+          pageSize={meta.current.perPage}
+          showQuickJumper
+          pageSizeOptions={['30', '50', '100']}
+          className='rc-pagination'
+          hideOnSinglePage={false}
+          showSizeChanger
+          onShowSizeChange={onChange}
+          onChange={onChange}
+          total={meta.current.totalResults}
+          locale={PaginationLocale}
+        />
+      </div>
+      <SearchInput onClearSearch={onClearSearch} onSearch={onChangeQuery} placeholder={'Search characters by name'} />
     </div>
+
     <div className="heroes-list">
 
       {heroes.map((cHero) => (<HeroCard hero={cHero} key={cHero.id} />))}</div>

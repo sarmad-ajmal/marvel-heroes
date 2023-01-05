@@ -8,6 +8,7 @@
     "@types/react-dom": "^16.9.0",
     "apisauce": "^2.1.6",
     "crypto-js": "^4.1.1",
+    "feather-icons-react": "^0.6.2",
     "query-string": "^8.1.0",
     "rc-pagination": "^1.21.0",
     "rc-select": "^10.0.0",
