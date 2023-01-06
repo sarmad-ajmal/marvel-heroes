@@ -24,10 +24,12 @@ const HeroDetail = () => {
   return <div className='hero-detail'>
     <BackButton goBack={goBack} />
     <div className="character-container">
+      <figure>
 
-      <img src={thumbnailUrl} alt={name} title={name} />
-      <div className='details'>
+        <img src={thumbnailUrl} alt={name} title={name} />
         <h2 className="title">{name}</h2>
+      </figure>
+      <div className='details'>
         <p>{description}</p>
       </div>
     </div>
@@ -97,6 +99,6 @@ const BackButton = ({ goBack }: { goBack: any }) => {
   if (nav == null) {
     return null
   }
-  return ReactDOM.createPortal(<span className='mobile-back' onClick={goBack} style={{cursor:'pointer'}}>
-    <FeatherIcon icon='chevron-left' color={'white'}/>  </span>, nav)
+  return ReactDOM.createPortal(<span className='mobile-back' onClick={goBack} style={{ cursor: 'pointer' }}>
+    <FeatherIcon icon='chevron-left' color={'white'} />  </span>, nav)
 }
