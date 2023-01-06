@@ -2,6 +2,7 @@ import React from 'react';
 import Pagination from 'rc-pagination'
 import Select from 'rc-select'
 import { Link } from "react-router-dom"
+import Img from "react-cool-img";
 
 import useHeroesGrid from "./index.hook"
 
@@ -62,7 +63,14 @@ const HeroCard = ({ hero }: { hero: IHero }) => {
     <Link to={detailUrl}>
       <div className="card">
         <div className="title">{name}</div>
-        <img src={thumbnailUrl} alt={name} title={name} />
+        <Img
+          placeholder={'/images/gif/loading_image.gif'}
+          error={'/images/gif/error_image.gif'}
+          alt={name}
+          src={thumbnailUrl}
+          title={name}
+          observerOptions={{ root: document, rootMargin: '50px', threshold: 0.01 }}
+        />
       </div>
     </Link>
   )

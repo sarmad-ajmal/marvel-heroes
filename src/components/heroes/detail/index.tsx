@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
+import Img from "react-cool-img";
 
 import useHeroDetail from './index.hook';
 import InlineSpinner from '../../../common/components/inline_spinner';
@@ -26,7 +27,14 @@ const HeroDetail = () => {
     <div className="character-container">
       <figure>
 
-        <img src={thumbnailUrl} alt={name} title={name} />
+        <Img
+          placeholder={'/images/gif/loading_image.gif'}
+          error={'/images/gif/error_image.gif'}
+          alt={name}
+          src={thumbnailUrl}
+          title={name}
+          debounce={0}
+        />
         <h2 className="title">{name}</h2>
       </figure>
       <div className='details'>
