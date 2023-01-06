@@ -605,8 +605,18 @@
 }
 
 @media only screen and (max-width: 510px) {
-  .rc-pagination-options{
+  .rc-pagination-options {
     margin-left: 0;
     margin-top: 5px;
   }
- }
+}
+
+body.dark-theme {
+  .rc-pagination-item,
+  .rc-select-selector {
+    background-color: #d1d1d1;
+  }
+  .rc-pagination-item-active {
+    background-color: #000000;
+  }
+}

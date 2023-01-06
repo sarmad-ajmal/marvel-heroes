@@ -202,3 +202,8 @@
     margin-block: 5px;
   }
 }
+body.dark-theme {
+  .hero-detail .info-panel .info h3 {
+    color: #dadada;
+  }
+}

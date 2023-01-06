@@ -4,7 +4,7 @@ import {
 } from 'react-router-dom'
 import InlineSpinner from './common/components/inline_spinner';
 import Layout from './layout';
-import './reset.css'
+import './index.scss'
 import "@fontsource/roboto"
 const HeroesGrid = lazy(() => import('./components/heroes').then(module => ({ default: module.HeroGrid })))
 const HeroesDetail = lazy(() => import('./components/heroes').then(module => ({ default: module.HeroDetail })))
