@@ -64,7 +64,7 @@ const useHeroesGrid = () => {
           meta.current.curPage * meta.current.perPage - meta.current.perPage,
       };
       if (!!query.current) {
-        Object.assign(payload, { name: query.current });
+        Object.assign(payload, { nameStartsWith: query.current });
       }
       const params = queryString.stringify(payload);
       const url = `https://gateway.marvel.com:443/v1/public/characters?${params}`;
