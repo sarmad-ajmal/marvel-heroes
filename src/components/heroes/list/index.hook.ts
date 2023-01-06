@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import queryString from "query-string";
 
 import { IHero, IMeta } from "../interface";
+import { useLocation } from "react-router-dom";
 
 const CryptoJS = require("crypto-js");
 
@@ -9,6 +10,7 @@ const PUBLIC_KEY = process.env.REACT_APP_PUBLIC_KEY || "";
 const PRIV_KEY = process.env.REACT_APP_PRIVATE_KEY || "";
 
 const useHeroesGrid = () => {
+  const { search } = useLocation();
   const [heroes, setHeroes] = useState<IHero[]>([]);
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
@@ -33,6 +35,11 @@ const useHeroesGrid = () => {
         perPage,
       };
     }
+    const params = queryString.stringify({
+      curPage,
+      perPage,
+    });
+    window.history.replaceState(null, "", `?${params}`);
     fetchHeores();
   };
 
@@ -92,6 +99,10 @@ const useHeroesGrid = () => {
     }
   };
   useEffect(() => {
+    const { curPage = 1, perPage = 30 } = queryString.parse(search);
+    if (curPage != null && perPage != null) {
+      meta.current = { ...meta.current, curPage: +curPage, perPage: +perPage };
+    }
     fetchHeores();
   }, []);
   return {
